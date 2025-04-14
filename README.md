@@ -25,7 +25,7 @@ A minimal, elegant job application tracking system with visualization tools to h
    git clone https://github.com/jettzgg/jobtracker.git
    cd jobtracker
    ```
-https://jettzgg.github.io/blog/
+
 2. Install dependencies:
    ```
    npm install
