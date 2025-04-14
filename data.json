@@ -1,34 +1,38 @@
 {
-    "applications": [
+  "applications": [
+    {
+      "id": "11eae578-c9ea-4575-aaf3-9dacdb96552c",
+      "company": "Amazon",
+      "position": "Software Development Engineer NG",
+      "status": "OA",
+      "lastUpdate": "2025-04-11",
+      "history": [
         {
-            "id": "11eae578-c9ea-4575-aaf3-9dacdb96552c",
-            "company": "Amazon",
-            "position": "Software Development Engineer NG",
-            "status": "OA",
-            "lastUpdate": "2025-04-11",
-            "history": [
-                {
-                    "status": "Applied",
-                    "date": "2025-04-11"
-                },
-                {
-                    "status": "OA",
-                    "date": "2025-04-11"
-                }
-            ]
+          "status": "Applied",
+          "date": "2025-04-11"
         },
         {
-            "id": "9b001e04-2f12-40d8-9137-6dca71ea2238",
-            "company": "Meta",
-            "position": "Network Production Engineer NG",
-            "status": "Applied",
-            "lastUpdate": "2025-04-13",
-            "history": [
-                {
-                    "status": "Applied",
-                    "date": "2025-04-13"
-                }
-            ]
+          "status": "OA",
+          "date": "2025-04-11"
         }
-    ]
+      ]
+    },
+    {
+      "id": "9b001e04-2f12-40d8-9137-6dca71ea2238",
+      "company": "Meta",
+      "position": "Network Production Engineer NG",
+      "status": "OA",
+      "lastUpdate": "2025-04-14",
+      "history": [
+        {
+          "status": "Applied",
+          "date": "2025-04-13"
+        },
+        {
+          "status": "OA",
+          "date": "2025-04-14"
+        }
+      ]
+    }
+  ]
 }
