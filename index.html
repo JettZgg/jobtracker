@@ -17,13 +17,24 @@
             color: #f5f5f5;
             font-family: 'Noto Serif SC', serif;
             line-height: 1.6;
-            margin: 20px;
+            margin: 10px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         header {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
             background: none;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin: 10px 0;
         }
 
         .main-content {
@@ -35,23 +46,54 @@
         .flow-chart-container {
             flex: 1;
             min-width: 350px;
+            width: 100%;
+            overflow-x: auto;
         }
 
         .applications-container {
             flex: 2;
-            min-width: 500px;
+            min-width: 300px;
+            width: 100%;
+        }
+
+        .ascii-flow-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+        }
+
+        .list-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .stats-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .stat-item {
+            background-color: #1e1e1e;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
 
         th,
         td {
-            padding: 10px;
+            padding: 8px;
             text-align: left;
             border: none;
+            white-space: nowrap;
         }
 
         tr {
@@ -80,10 +122,15 @@
             margin-right: 10px;
             margin-bottom: 10px;
             border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
         }
 
         .filters {
             margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         @media (max-width: 992px) {
@@ -93,6 +140,67 @@
 
             .flow-chart-container,
             .applications-container {
+                width: 100%;
+            }
+
+            .stat-item {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            th,
+            td {
+                padding: 6px;
+                font-size: 0.85rem;
+            }
+
+            .history-btn {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin: 5px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                margin: 10px 0;
+            }
+
+            .stats-inline {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .stat-item {
+                font-size: 0.75rem;
+                flex: 1;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            .filters {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            input,
+            select {
+                margin-right: 0;
                 width: 100%;
             }
         }
@@ -132,9 +240,9 @@
             font-family: 'Noto Serif SC', serif;
             padding: 20px;
             border-radius: 0;
-            width: 80%;
+            width: 90%;
             max-width: 600px;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
         }
 
@@ -159,13 +267,13 @@
 
     <main class="main-content">
         <section class="flow-chart-container">
-            <h2>Application Flow Chart</h2>
+            <h2>Flow Chart</h2>
             <div id="flow-chart"></div>
         </section>
 
         <section class="applications-container">
             <div class="list-header">
-                <h2>Application List</h2>
+                <h2>List</h2>
                 <div class="stats-inline">
                     <div class="stat-item">
                         <span class="stat-label">Total:</span>
@@ -192,8 +300,8 @@
                     <tr>
                         <th>Company</th>
                         <th>Position</th>
-                        <th>Status</th>
-                        <th>Update</th>
+                        <th>Current Status</th>
+                        <th>Last Update</th>
                         <th>History</th>
                     </tr>
                 </thead>
