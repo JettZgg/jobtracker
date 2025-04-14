@@ -35,8 +35,16 @@ function generateFlowChart() {
         container.style.borderRadius = '0';
         container.style.overflow = 'auto';
         container.style.maxWidth = '100%';
-        container.style.maxHeight = '500px';
+        // Remove fixed height constraint to allow content to determine height
+        container.style.height = 'auto';
         container.style.boxShadow = 'none';
+
+        // Add responsive adjustments for mobile
+        if (window.innerWidth <= 480) {
+            container.style.padding = '10px';
+            container.style.fontSize = '12px';
+            container.style.lineHeight = '1.2';
+        }
 
         // Analyze data, calculate number of applications at each stage
         const stageCounts = countApplicationsByStage();

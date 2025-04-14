@@ -50,16 +50,25 @@
             overflow-x: auto;
         }
 
-        .applications-container {
-            flex: 2;
-            min-width: 300px;
-            width: 100%;
+        #flow-chart {
+            height: auto;
+            min-height: 50px;
         }
 
         .ascii-flow-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding-bottom: 10px;
+            height: auto;
+            min-height: 50px;
+            max-height: none;
+            background-color: #1a1a1a;
+        }
+
+        .applications-container {
+            flex: 2;
+            min-width: 300px;
+            width: 100%;
         }
 
         .list-header {
@@ -179,6 +188,19 @@
             h2 {
                 font-size: 1.2rem;
                 margin: 10px 0;
+            }
+
+            .flow-chart-container {
+                margin-bottom: 10px;
+            }
+
+            #flow-chart {
+                padding: 10px 0;
+            }
+
+            .ascii-flow-container {
+                padding: 10px;
+                margin-bottom: 0;
             }
 
             .stats-inline {
