@@ -79,18 +79,18 @@ function countApplicationsByStage() {
         'Ghosted': 0
     };
 
-    // Ensure Applied count is correct (all applications should count as Applied)
+    // Count total number of applications
     counts['Applied'] = applicationsData.length;
 
-    // Count applications that went through each stage
+    // Count applications at each stage
     applicationsData.forEach(app => {
         if (app.history && app.history.length > 0) {
-            // Get unique statuses for this application
+            // Only count each status once per application
             const uniqueStatuses = new Set(app.history.map(h => h.status));
 
-            // Count each status
+            // Skip 'Applied' as we've already counted it above
             uniqueStatuses.forEach(status => {
-                if (counts.hasOwnProperty(status)) {
+                if (status !== 'Applied' && counts.hasOwnProperty(status)) {
                     counts[status]++;
                 }
             });
@@ -110,6 +110,9 @@ function countApplicationsByStage() {
 // Generate ASCII flow chart
 function generateAsciiFlowChart(stageCounts) {
     let ascii = '';
+
+    // Debug output to console
+    console.log("Stage counts for flow chart:", stageCounts);
 
     // Level 0: Applied
     ascii += `Applied (${stageCounts['Applied']})\n`;
