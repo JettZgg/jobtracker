@@ -79,23 +79,23 @@ function countApplicationsByStage() {
         'Ghosted': 0
     };
 
+    // Ensure Applied count is correct (all applications should count as Applied)
+    counts['Applied'] = applicationsData.length;
+
+    // Count applications that went through each stage
     applicationsData.forEach(app => {
-        // Count each actual stage traversed
         if (app.history && app.history.length > 0) {
+            // Get unique statuses for this application
             const uniqueStatuses = new Set(app.history.map(h => h.status));
+
+            // Count each status
             uniqueStatuses.forEach(status => {
                 if (counts.hasOwnProperty(status)) {
                     counts[status]++;
                 }
             });
-        } else {
-            // If no history, count as Applied
-            counts['Applied']++;
         }
     });
-
-    // Ensure Applied count is correct (all applications should count as Applied)
-    counts['Applied'] = applicationsData.length;
 
     // Filter out stages with zero count
     Object.keys(counts).forEach(key => {
@@ -113,157 +113,28 @@ function generateAsciiFlowChart(stageCounts) {
 
     // Level 0: Applied
     ascii += `Applied (${stageCounts['Applied']})\n`;
+    ascii += '│\n';
 
-    // Check if there are any nodes at the next level
-    const hasAnyNextLevel = stageCounts['OA'] > 0 || stageCounts['First Stage'] > 0;
+    // Level 1: OA
+    if (stageCounts['OA'] > 0) {
+        ascii += '└───> OA (' + stageCounts['OA'] + ')\n';
+        ascii += '      │\n';
 
-    if (hasAnyNextLevel) {
-        ascii += '│\n';
-    }
-
-    // Level 1: OA and First Stage
-    const hasOA = stageCounts['OA'] > 0;
-    const hasFirstStage = stageCounts['First Stage'] > 0;
-
-    if (hasOA) {
-        // OA branch
-        ascii += '├───> OA (' + stageCounts['OA'] + ')';
-
-        // Only add vertical line if First Stage exists
-        if (hasFirstStage) {
-            ascii += '\n│      │\n';
-        } else {
-            ascii += '\n';
-        }
-    }
-
-    if (hasFirstStage) {
-        // First Stage (junction point)
-        if (hasOA) {
-            ascii += '└───> First Stage (' + stageCounts['First Stage'] + ')';
-        } else {
-            ascii += '└───> First Stage (' + stageCounts['First Stage'] + ')';
-        }
-
-        // Level 2: Second Stage, Rejected, Ghosted
-        const hasSecondStage = stageCounts['Second Stage'] > 0;
+        // Determine if we need branches from OA
+        const hasFirstStage = stageCounts['First Stage'] > 0;
         const hasRejected = stageCounts['Rejected'] > 0;
-        const hasGhosted = stageCounts['Ghosted'] > 0;
 
-        // Only add vertical line if there are nodes at the next level
-        const hasAnyThirdLevel = hasSecondStage || hasRejected || hasGhosted;
-
-        if (hasAnyThirdLevel) {
-            ascii += '\n';
-            if (hasOA) {
-                ascii += '       │\n';
-            } else {
-                ascii += '      │\n';
-            }
-        } else {
-            ascii += '\n';
-        }
-
-        const indent = hasOA ? '       ' : '      ';
-
-        if (hasSecondStage) {
-            ascii += indent + '├───> Second Stage (' + stageCounts['Second Stage'] + ')';
-
-            // Check if there are third level nodes
-            const hasThirdStage = stageCounts['Third Stage'] > 0;
-            const hasAssessment = stageCounts['Assessment'] > 0;
-
-            if (hasThirdStage || hasAssessment) {
-                ascii += '\n' + indent + '│     │\n';
-            } else {
-                ascii += '\n';
-            }
-
-            // Level 3: Third Stage
-            if (hasThirdStage) {
-                ascii += indent + '│     └───> Third Stage (' + stageCounts['Third Stage'] + ')';
-
-                // Check if there are next level nodes
-                if (stageCounts['Assessment'] > 0) {
-                    ascii += '\n' + indent + '│           │\n';
-                } else {
-                    ascii += '\n';
-                }
-
-                // Level 4: Assessment from Third Stage
-                if (stageCounts['Assessment'] > 0) {
-                    ascii += indent + '│           └───> Assessment (' + stageCounts['Assessment'] + ')';
-
-                    // Check if there are next level nodes
-                    if (stageCounts['Job Offer'] > 0) {
-                        ascii += '\n' + indent + '│                 │\n';
-                    } else {
-                        ascii += '\n';
-                    }
-
-                    // Level 5: Job Offer
-                    if (stageCounts['Job Offer'] > 0) {
-                        ascii += indent + '│                 └───> Job Offer (' + stageCounts['Job Offer'] + ')';
-
-                        // Check if there are next level nodes
-                        if (stageCounts['Accepted'] > 0) {
-                            ascii += '\n' + indent + '│                       │\n';
-                        } else {
-                            ascii += '\n';
-                        }
-
-                        // Level 6: Accepted
-                        if (stageCounts['Accepted'] > 0) {
-                            ascii += indent + '│                       └───> Accepted (' + stageCounts['Accepted'] + ')\n';
-                        }
-                    }
-                }
-            } else if (stageCounts['Assessment'] > 0) {
-                // Level 4: Assessment directly from Second Stage
-                ascii += indent + '│     └───> Assessment (' + stageCounts['Assessment'] + ')';
-
-                // Check if there are next level nodes
-                if (stageCounts['Job Offer'] > 0) {
-                    ascii += '\n' + indent + '│           │\n';
-                } else {
-                    ascii += '\n';
-                }
-
-                // Level 5: Job Offer
-                if (stageCounts['Job Offer'] > 0) {
-                    ascii += indent + '│           └───> Job Offer (' + stageCounts['Job Offer'] + ')';
-
-                    // Check if there are next level nodes
-                    if (stageCounts['Accepted'] > 0) {
-                        ascii += '\n' + indent + '│                 │\n';
-                    } else {
-                        ascii += '\n';
-                    }
-
-                    // Level 6: Accepted
-                    if (stageCounts['Accepted'] > 0) {
-                        ascii += indent + '│                 └───> Accepted (' + stageCounts['Accepted'] + ')\n';
-                    }
-                }
-            }
-        }
-
-        // Back to Level 2: Rejected
-        if (hasRejected) {
-            if (hasSecondStage) {
-                ascii += indent + '├───> Rejected (' + stageCounts['Rejected'] + ')\n';
-            } else {
-                ascii += indent + '└───> Rejected (' + stageCounts['Rejected'] + ')\n';
-            }
-        }
-
-        // Level 2: Ghosted
-        if (hasGhosted) {
-            if (hasSecondStage || hasRejected) {
-                ascii += indent + '└───> Ghosted (' + stageCounts['Ghosted'] + ')\n';
-            } else {
-                ascii += indent + '└───> Ghosted (' + stageCounts['Ghosted'] + ')\n';
-            }
+        // Add branches from OA
+        if (hasFirstStage && hasRejected) {
+            // Both First Stage and Rejected exist
+            ascii += '      ├───> First Stage (' + stageCounts['First Stage'] + ')\n';
+            ascii += '      └───> Rejected (' + stageCounts['Rejected'] + ')\n';
+        } else if (hasFirstStage) {
+            // Only First Stage exists
+            ascii += '      └───> First Stage (' + stageCounts['First Stage'] + ')\n';
+        } else if (hasRejected) {
+            // Only Rejected exists
+            ascii += '      └───> Rejected (' + stageCounts['Rejected'] + ')\n';
         }
     }
 
