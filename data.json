@@ -25,8 +25,8 @@
       "id": "9b001e04-2f12-40d8-9137-6dca71ea2238",
       "company": "Meta",
       "position": "Network Production Engineer NG",
-      "status": "OA",
-      "lastUpdate": "2025-04-14",
+      "status": "First Stage",
+      "lastUpdate": "2025-04-23",
       "history": [
         {
           "status": "Applied",
@@ -35,6 +35,10 @@
         {
           "status": "OA",
           "date": "2025-04-14"
+        },
+        {
+          "status": "First Stage",
+          "date": "2025-05-07"
         }
       ]
     }
