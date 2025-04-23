@@ -4,8 +4,8 @@
       "id": "11eae578-c9ea-4575-aaf3-9dacdb96552c",
       "company": "Amazon",
       "position": "Software Development Engineer NG",
-      "status": "OA",
-      "lastUpdate": "2025-04-11",
+      "status": "Rejected",
+      "lastUpdate": "2025-04-23",
       "history": [
         {
           "status": "Applied",
@@ -14,6 +14,10 @@
         {
           "status": "OA",
           "date": "2025-04-11"
+        },
+        {
+          "status": "Rejected",
+          "date": "2025-04-23"
         }
       ]
     },
